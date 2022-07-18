@@ -23,6 +23,13 @@
 
         </div>
       </div>
+
+      <div class="mx-2">
+        <div id="toast-simple" :class="[onLine ? 'd-none' : 'd-flex']" role="alert">
+          <div class="pl-4 text-sm font-normal"><span class="mr-2">🔴</span>Application is currently offline</div>
+        </div>
+      </div>
+
 </div> 
 
   </main>
@@ -40,8 +47,29 @@ export default {
       selected: '',
       image: '',
       store: store,
+      onLine: navigator.onLine,
+      showBackOnline: false
     }
   },
+  methods: {
+    updateOnlineStatus(e) {
+        const {
+            type
+        } = e;
+        this.onLine = type === 'online';
+    }
+  },
+   watch: {
+        onLine(v) {
+            if (v) {
+                this.showBackOnline = true;
+                setTimeout(() => {
+                    this.showBackOnline = false;
+                }, 1000);
+            }
+            console.log(this.onLine);
+        }
+    },
   mounted() {
     axios
         .get('https://restcountries.com/v2/all')
@@ -50,7 +78,13 @@ export default {
           store.allCountries = response.data;
           // console.log(store.allCountries)
           return this.contents = response.data; 
-          })
+          });
+    window.addEventListener('online', this.updateOnlineStatus);
+    window.addEventListener('offline', this.updateOnlineStatus);
+  },
+  beforeUnmount() {
+    window.removeEventListener('online', this.updateOnlineStatus);
+    window.removeEventListener('offline', this.updateOnlineStatus);
   },
 }
 </script>
@@ -79,4 +113,40 @@ select {
   }
   
 }
+
+#toast-simple {
+  position: fixed;
+  bottom: 0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 360px;
+  color: gray;
+  background-color: white;
+  border-radius: 0.5rem;
+  animation: slide-up 350ms ease-in-out forwards;
+}
+
+@media (min-width: 768px) { 
+    #toast-simple {
+    right: -10.75rem;
+    left: unset;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 200px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+
+
 </style>
