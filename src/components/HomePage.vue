@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row text-center text-white pb-2">
         <div class="col-lg-9 mx-auto">
-          <h1 class="display-4">List of countries API</h1>
+          <h1 class="display-6">List of countries API</h1>
           <p class="lead mb-0">Using Vue, Bootstrap to create a PWA</p>
         </div>
       </div>
@@ -29,10 +29,8 @@
 </template>
 
 <script>
-
 import axios from 'axios'
 import { store } from '../store'
-
 
 export default {
   name: 'HomePage',
@@ -58,10 +56,27 @@ export default {
 </script>
 
 <style scoped>
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 select {
   display: block;
   margin: 0.5rem auto;
   max-width: 410px;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .display-6{
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+  }
+  
 }
 </style>
