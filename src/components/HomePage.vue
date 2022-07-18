@@ -14,13 +14,12 @@
           <span class="text-secondary mb-3 lead fw-bolder">Select your country of residence</span>
 
           <select v-model="selected" @change="store.changeCountry($event)">
-            <option v-for="content in contents" v-bind:value="{ image: content.flag }" :key="content.name">
+            <option v-for="content in contents" :key="content.name" >
               <span>{{ content.name }}</span>
             </option>
           </select>
 
           <h2>{{ store.selectedCountry }}</h2>
-          <img  :src="selected.image" alt="" width="100" class="mr-2 d-inline-block" >
 
         </div>
       </div>
@@ -32,7 +31,8 @@
 <script>
 
 import axios from 'axios'
-import {store} from '../store'
+import { store } from '../store'
+
 
 export default {
   name: 'HomePage',
@@ -53,13 +53,15 @@ export default {
           // console.log(store.allCountries)
           return this.contents = response.data; 
           })
-  }
-
+  },
 }
 </script>
 
 <style scoped>
-.dropdown-menu { max-height: 280px; overflow-y: auto; min-width: 100% !important; background-attachment: local, local, scroll, scroll; }
-
-.dropdown-item { white-space: normal; }
+select {
+  display: block;
+  margin: 0.5rem auto;
+  max-width: 410px;
+  width: 100%;
+}
 </style>

@@ -1,14 +1,23 @@
 <template>
   <HomePage />
+    <!-- <Offline @detected-condition="handleConnectivityChange"></Offline> -->
 </template>
 
 <script>
+
 import HomePage from './components/HomePage.vue'
+// import Offline  from 'v-offline';
 
 export default {
   name: 'App',
   components: {
-    HomePage
+    HomePage,
+    // Offline 
+  },
+    methods: {
+    // handleConnectivityChange(status) {
+    //   console.log(status);
+    // }
   }
 }
 </script>
